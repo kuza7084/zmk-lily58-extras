@@ -2,13 +2,30 @@ menuconfig ZMK_LILY58_EXTRAS_ROTATED_DISPLAY
     bool "Rotated status screen for a sideways-mounted OLED"
     depends on ZMK_DISPLAY
     default y
+    select ZMK_DISPLAY_STATUS_SCREEN_CUSTOM
+    select LV_OBJ_LABEL
+    select LV_USE_SNAPSHOT
+    imply LV_USE_THEME_MONO if LV_Z_BITS_PER_PIXEL=1
+    imply LV_FONT_MONTSERRAT_16
+    imply ZMK_WIDGET_LAYER_STATUS
+    imply ZMK_WIDGET_BATTERY_STATUS
+    imply ZMK_WIDGET_OUTPUT_STATUS
+    imply ZMK_WIDGET_PERIPHERAL_STATUS
     help
       Replaces ZMK's built-in status screen with one that lays widgets
       out in a portrait container and rotates the rendered result, so a
-      physically sideways-mounted OLED reads upright. Requires
-      CONFIG_ZMK_DISPLAY_STATUS_SCREEN_BUILT_IN=n.
+      physically sideways-mounted OLED reads upright.
+
+      Selects the ZMK_DISPLAY_STATUS_SCREEN_CUSTOM choice, which drops
+      the automatic widget/font/theme selection that only applies to
+      ZMK_DISPLAY_STATUS_SCREEN_BUILT_IN - re-implied above so the
+      visible widget set matches ZMK's stock behavior.
 
 if ZMK_LILY58_EXTRAS_ROTATED_DISPLAY
+
+choice LV_FONT_DEFAULT
+    default LV_FONT_DEFAULT_MONTSERRAT_16
+endchoice
 
 config ZMK_LILY58_EXTRAS_DISPLAY_ROTATION
     int "Rotation, in tenths of a degree (900 = 90, 2700 = 270)"
