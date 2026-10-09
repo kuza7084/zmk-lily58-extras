@@ -4,6 +4,7 @@ menuconfig ZMK_LILY58_EXTRAS_ROTATED_DISPLAY
     default y
     select LV_OBJ_LABEL
     select LV_USE_SNAPSHOT
+    select LV_USE_FLEX
     imply LV_USE_THEME_MONO if LV_Z_BITS_PER_PIXEL=1
     imply LV_FONT_MONTSERRAT_16
     imply ZMK_WIDGET_LAYER_STATUS
