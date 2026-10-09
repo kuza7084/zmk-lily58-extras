@@ -1,0 +1,41 @@
+menuconfig ZMK_LILY58_EXTRAS_ROTATED_DISPLAY
+    bool "Rotated status screen for a sideways-mounted OLED"
+    depends on ZMK_DISPLAY
+    default y
+    help
+      Replaces ZMK's built-in status screen with one that lays widgets
+      out in a portrait container and rotates the rendered result, so a
+      physically sideways-mounted OLED reads upright. Requires
+      CONFIG_ZMK_DISPLAY_STATUS_SCREEN_BUILT_IN=n.
+
+if ZMK_LILY58_EXTRAS_ROTATED_DISPLAY
+
+config ZMK_LILY58_EXTRAS_DISPLAY_ROTATION
+    int "Rotation, in tenths of a degree (900 = 90, 2700 = 270)"
+    default 900
+    help
+      If the screen renders upside-down or mirrored, try 2700 instead
+      of 900 (the panel is physically mounted sideways, so only one of
+      the two directions will look right).
+
+config ZMK_LILY58_EXTRAS_CONTENT_WIDTH
+    int "Logical (pre-rotation) content width, in px"
+    default 32
+    help
+      Should equal the physical display's short dimension.
+
+config ZMK_LILY58_EXTRAS_CONTENT_HEIGHT
+    int "Logical (pre-rotation) content height, in px"
+    default 128
+    help
+      Should equal the physical display's long dimension.
+
+config ZMK_LILY58_EXTRAS_REFRESH_MS
+    int "Snapshot refresh interval, in ms"
+    default 1000
+    help
+      The rotated view is a periodically-refreshed snapshot, not a
+      live view, since LVGL's snapshot API renders a widget tree once
+      per call. Lower values track changes faster but cost more CPU.
+
+endif # ZMK_LILY58_EXTRAS_ROTATED_DISPLAY
